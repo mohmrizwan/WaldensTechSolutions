@@ -1,17 +1,14 @@
-import { useRef } from 'react'
+import { useRef , useState, useEffect} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Settings, LogOut, ChevronDown } from 'lucide-react'
 import { useClickOutside } from '../../../hooks/useClickOutside'
 import { ROUTES } from '../../../utils/constants'
+import { getCurrentAdmin } from '../../../api/adminApi'
 
-/**
- * User avatar + dropdown with quick links to Settings and logout.
- * STATIC UI MODE: there is no session, so identity fields are static
- * placeholders and "Log out" is just a link to the Login page for
- * design purposes — it does not clear any auth state.
- */
+
+
 export default function ProfileMenu({ isOpen, onToggle, onClose }) {
-  const user = null
+  const [admin , setAdmin]= useState(null);
   const navigate = useNavigate()
   const menuRef = useRef(null)
   useClickOutside(menuRef, onClose, isOpen)
@@ -20,6 +17,19 @@ export default function ProfileMenu({ isOpen, onToggle, onClose }) {
     onClose()
     navigate(ROUTES.LOGIN)
   }
+    useEffect(() => {
+    const fetchAdmin = async () => {
+      try {
+        const data = await getCurrentAdmin();
+        console.log(data);
+        setAdmin(data.admin);
+      } catch (error) {
+        console.error("Failed to fetch admin:", error);
+      }
+    };
+
+    fetchAdmin();
+  }, []);
 
   return (
     <div className="relative" ref={menuRef}>
@@ -28,10 +38,10 @@ export default function ProfileMenu({ isOpen, onToggle, onClose }) {
         className="flex items-center gap-2 rounded-lg p-1.5 pr-2 transition hover:bg-white/5"
       >
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-accent to-accent-dark text-sm font-medium text-white">
-          {(user?.name || 'A').charAt(0).toUpperCase()}
+          {(admin?.name || 'A').charAt(0).toUpperCase()}
         </div>
         <span className="hidden text-sm font-medium text-gray-200 sm:block">
-          {user?.name || 'Admin'}
+          {admin?.name || 'Admin'}
         </span>
         <ChevronDown
           size={16}
@@ -45,10 +55,10 @@ export default function ProfileMenu({ isOpen, onToggle, onClose }) {
         <div className="absolute right-0 z-50 mt-2 w-56 animate-slide-in rounded-xl border border-white/5 bg-surface-100/95 shadow-glass backdrop-blur-xl">
           <div className="border-b border-white/5 px-4 py-3">
             <p className="truncate text-sm font-medium text-gray-100">
-              {user?.name || 'Admin'}
+              {admin?.name || 'Admin'}
             </p>
             <p className="truncate text-xs text-gray-500">
-              {user?.email || 'admin@example.com'}
+              {admin?.email || 'admin@example.com'}
             </p>
           </div>
 

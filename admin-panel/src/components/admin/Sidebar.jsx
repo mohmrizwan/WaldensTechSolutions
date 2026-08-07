@@ -15,6 +15,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import { getCurrentAdmin } from "../../api/adminApi";
+import logo from "../../../../frontend/src/assets/images/navbar-logo.png";
 
 const ICON_MAP = {
   LayoutDashboard,
@@ -98,11 +99,9 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Brand */}
       <div className="flex h-16 items-center justify-between px-5">
         <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-dark shadow-glass-sm">
-            <Sparkles size={18} className="text-white" />
-          </div>
+          
           <span className="text-lg font-semibold tracking-tight text-gray-100">
-            Adminly
+           <img src={logo} alt="Walden  Logo" />
           </span>
         </div>
         <button

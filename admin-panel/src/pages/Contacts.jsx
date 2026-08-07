@@ -58,7 +58,7 @@ export default function Contacts() {
   const handleDeleteConfirm = async () => {
     setIsSubmitting(true)
     try {
-      await deleteContact(deleteModal.contact.id)
+      await deleteContact(deleteModal.contact._id)
       setDeleteModal({ isOpen: false, contact: null })
       loadContacts()
     } catch (error) {

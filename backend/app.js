@@ -13,6 +13,7 @@ import projectAuth from "./Router/projectRoutes.js";
 import contactRoutes from "./Router/contactRoutes.js";
 import adminContactAuth from "./Router/adminContactRoutes.js";
 import reviewRoutes from "./Router/reviewRoutes.js";
+import dashboardRoutes from "./Router/dashboardRoutes.js";
 const app = express();
 const port = process.env.PORT;
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -43,6 +44,7 @@ app.use(
 );
 
 app.use("/admin", adminAuth);
+app.use("/admin/dashboard", dashboardRoutes);
 
 // admin-only service routes
 app.use("/admin/service", serviceAuth);

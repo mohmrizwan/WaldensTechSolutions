@@ -1,12 +1,6 @@
-import { BarChart3 } from 'lucide-react'
+export default function ChartPlaceholder({ title = 'Overview', data = [] }) {
+  const maximum = Math.max(1, ...data.flatMap((item) => [item.services, item.projects, item.contacts]))
 
-/**
- * Visual placeholder for the analytics chart. Real chart integration
- * (recharts, chart.js, etc.) is a separate task once backend metrics
- * endpoints exist — kept simple and honest about being a placeholder
- * rather than faking data with a rendered chart.
- */
-export default function ChartPlaceholder({ title = 'Overview' }) {
   return (
     <div className="glass-card rounded-2xl p-5">
       <div className="flex items-center justify-between">
@@ -16,10 +10,29 @@ export default function ChartPlaceholder({ title = 'Overview' }) {
         </span>
       </div>
 
-      <div className="mt-6 flex h-56 flex-col items-center justify-center rounded-xl border border-dashed border-white/10 bg-surface-200/30">
-        <BarChart3 size={32} className="text-gray-600" />
-        <p className="mt-3 text-sm text-gray-500">Chart will render here</p>
-        <p className="text-xs text-gray-600">Connect analytics data to enable this chart</p>
+      <div className="mt-6 rounded-xl border border-white/10 bg-surface-200/30 p-4">
+        <div className="flex h-48 items-end gap-2 sm:gap-4">
+          {data.map((item) => (
+            <div key={item.label} className="flex min-w-0 flex-1 items-end justify-center gap-1">
+              {[['services', 'bg-accent'], ['projects', 'bg-emerald-400'], ['contacts', 'bg-rose-400']].map(([key, color]) => (
+                <div
+                  key={key}
+                  className={`w-full max-w-5 rounded-t-sm ${color}`}
+                  style={{ height: `${Math.max(4, (item[key] / maximum) * 100)}%` }}
+                  title={`${key}: ${item[key]}`}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        <div className="mt-2 flex gap-2 sm:gap-4">
+          {data.map((item) => <span key={item.label} className="min-w-0 flex-1 text-center text-[10px] text-gray-500">{item.label}</span>)}
+        </div>
+        <div className="mt-4 flex gap-4 text-xs text-gray-400">
+          <span><i className="mr-1 inline-block h-2 w-2 rounded-full bg-accent" />Services</span>
+          <span><i className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-400" />Projects</span>
+          <span><i className="mr-1 inline-block h-2 w-2 rounded-full bg-rose-400" />Contacts</span>
+        </div>
       </div>
     </div>
   )

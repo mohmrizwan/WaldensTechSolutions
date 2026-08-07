@@ -7,10 +7,7 @@ import QuickActions from '../components/admin/dashboard/QuickActions'
 import Loader from '../components/admin/Loader'
 import { fetchDashboardStats, fetchRecentActivity } from '../api/dashboardApi'
 
-/**
- * Dashboard page. Owns all data fetching and loading/error state;
- * child components stay presentational and receive data as props.
- */
+
 export default function Dashboard() {
   const [stats, setStats] = useState(null)
   const [activity, setActivity] = useState([])
@@ -108,7 +105,7 @@ export default function Dashboard() {
       {/* Chart + Quick Actions + Activity */}
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <ChartPlaceholder />
+          <ChartPlaceholder data={stats?.chart || []} />
           <QuickActions />
         </div>
         <RecentActivity
