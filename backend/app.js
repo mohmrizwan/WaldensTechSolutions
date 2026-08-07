@@ -1,4 +1,6 @@
 import express from "express";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
 dotenv.config();
 import cookieParser from "cookie-parser";
@@ -13,8 +15,10 @@ import adminContactAuth from "./Router/adminContactRoutes.js";
 import reviewRoutes from "./Router/reviewRoutes.js";
 const app = express();
 const port = process.env.PORT;
+const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(cookieParser());
+app.use("/uploads", express.static(path.join(currentDirectory, "uploads")));
 
 const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
 

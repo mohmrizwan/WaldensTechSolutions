@@ -14,12 +14,16 @@ export async function fetchProjects({ page = 1, limit = 8, search = "" } = {}) {
 }
 
 export async function createProject(data) {
-  const response = await api.post("/admin/project/create", data);
+  const response = await api.post("/admin/project/create", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 }
 
 export async function updateProject(id, data) {
-  const response = await api.put(`/admin/project/update/${id}`, data);
+  const response = await api.put(`/admin/project/update/${id}`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 }
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { fetchProjects } from "../api/projectApi";
 
 const placeholderCards = [
@@ -87,13 +86,16 @@ const Projects = () => {
                   />
                   <div className="absolute inset-0 bg-[#0B1220]/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 translate-y-3 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-                    <Link
-                      to={project.projectUrl || "/project"}
-                      className="flex items-center gap-2 rounded-full border border-[#F4C95D] bg-[#0B1220]/80 px-4 py-2 text-xs font-space font-medium text-[#F4C95D]"
+                    <a
+                      href={project.projectUrl || "/project"}
+                      target={project.projectUrl?.startsWith("http") ? "_blank" : undefined}
+                      rel={project.projectUrl?.startsWith("http") ? "noreferrer" : undefined}
+                      aria-label={`View ${project.name || project.title || "project"}`}
+                      className="flex items-center gap-2 rounded-full border border-[#F4C95D] bg-[#0B1220]/80 px-4 py-2 text-xs font-space font-medium text-[#F4C95D] transition-colors hover:bg-[#F4C95D] hover:text-[#0B1220]"
                     >
                       <span>View Project</span>
                       <i className="fa-solid fa-arrow-right" />
-                    </Link>
+                    </a>
                   </div>
                 </div>
 

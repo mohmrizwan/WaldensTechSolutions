@@ -9,7 +9,7 @@ const STATUS_OPTIONS = ['active', 'completed', 'on-hold', 'cancelled']
 /**
  * Add/Edit form for a Project. `project` prop null = create mode.
  */
-export default function ProjectFormModal({ isOpen, onClose, onSubmit, project, isSubmitting }) {
+export default function ProjectFormModal({ isOpen, onClose, onSubmit, project, isSubmitting, serverError }) {
   const isEditMode = !!project
 
   const {
@@ -23,6 +23,9 @@ export default function ProjectFormModal({ isOpen, onClose, onSubmit, project, i
       client: '',
       status: 'active',
       description: '',
+      projectUrl: '/project',
+      imageUrl: '',
+      imageFile: null,
       startDate: '',
       endDate: '',
     },
@@ -35,6 +38,9 @@ export default function ProjectFormModal({ isOpen, onClose, onSubmit, project, i
         client: project?.client || '',
         status: project?.status || 'active',
         description: project?.description || '',
+        projectUrl: project?.projectUrl || '/project',
+        imageUrl: project?.imageUrl || '',
+        imageFile: null,
         startDate: project?.startDate?.slice(0, 10) || '',
         endDate: project?.endDate?.slice(0, 10) || '',
       })
@@ -48,6 +54,12 @@ export default function ProjectFormModal({ isOpen, onClose, onSubmit, project, i
       title={isEditMode ? 'Edit Project' : 'Add Project'}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {serverError && (
+          <div className="rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+            {serverError}
+          </div>
+        )}
+
         <FormField label="Project Name" error={errors.name}>
           <input
             type="text"
@@ -83,6 +95,32 @@ export default function ProjectFormModal({ isOpen, onClose, onSubmit, project, i
               </option>
             ))}
           </select>
+        </FormField>
+
+        <FormField label="Project URL" error={errors.projectUrl}>
+          <input
+            type="text"
+            className={inputClass}
+            placeholder="e.g. https://example.com"
+            {...register('projectUrl', {
+              pattern: {
+                value: /^(\/|https?:\/\/).+/i,
+                message: 'Use a relative path or an http(s) URL',
+              },
+            })}
+          />
+        </FormField>
+
+        <FormField label="Project Image" error={errors.imageFile}>
+          <input
+            type="file"
+            accept="image/*"
+            className={inputClass}
+            {...register('imageFile')}
+          />
+          {project?.imageUrl && (
+            <p className="mt-1 text-xs text-gray-500">Choose a new file only if you want to replace the current image.</p>
+          )}
         </FormField>
 
         <FormField label="Description" error={errors.description}>

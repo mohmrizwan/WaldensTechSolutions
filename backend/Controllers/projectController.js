@@ -1,11 +1,39 @@
 import Project from "../Models/ProjectModel.js";
 
+const normalizeProjectUrl = (value) => {
+  const projectUrl = typeof value === "string" ? value.trim() : "";
+
+  if (!projectUrl) {
+    return "/project";
+  }
+
+  if (projectUrl.startsWith("/")) {
+    return projectUrl;
+  }
+
+  try {
+    const url = new URL(projectUrl);
+    if (!["http:", "https:"].includes(url.protocol)) {
+      return null;
+    }
+    return url.toString();
+  } catch {
+    return null;
+  }
+};
+
 export const createProject = async (req, res) => {
   try {
     const { name, client, category, description, status, startDate, endDate, imageUrl, projectUrl } = req.body;
+    const normalizedProjectUrl = normalizeProjectUrl(projectUrl);
+    const uploadedImageUrl = req.file ? `${req.protocol}://${req.get("host")}/uploads/projects/${req.file.filename}` : imageUrl;
 
     if (!name || !client || !description) {
       return res.status(400).json({ success: false, message: "Name, client, and description are required." });
+    }
+
+    if (!normalizedProjectUrl) {
+      return res.status(400).json({ success: false, message: "Project URL must be a relative path or an http(s) URL." });
     }
 
     const existing = await Project.findOne({ name });
@@ -21,8 +49,8 @@ export const createProject = async (req, res) => {
       status,
       startDate: startDate ? new Date(startDate) : undefined,
       endDate: endDate ? new Date(endDate) : undefined,
-      imageUrl,
-      projectUrl,
+      imageUrl: uploadedImageUrl,
+      projectUrl: normalizedProjectUrl,
     });
 
     return res.status(201).json({ success: true, message: "Project created", data: project });
@@ -79,7 +107,18 @@ export const getProjectById = async (req, res) => {
 export const updateProject = async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
+    const updates = { ...req.body };
+
+    if (req.file) {
+      updates.imageUrl = `${req.protocol}://${req.get("host")}/uploads/projects/${req.file.filename}`;
+    }
+
+    if ("projectUrl" in updates) {
+      updates.projectUrl = normalizeProjectUrl(updates.projectUrl);
+      if (!updates.projectUrl) {
+        return res.status(400).json({ success: false, message: "Project URL must be a relative path or an http(s) URL." });
+      }
+    }
 
     const project = await Project.findByIdAndUpdate(id, updates, {
       new: true,

@@ -17,6 +17,6 @@ router.post("/login", adminLogin);
 
 // Protected routes
 router.post("/logout", authMiddleware, adminMiddleware, logoutAdmin);
-router.get("/me", authMiddleware, getCurrentAdmin);
+router.get("/me", authMiddleware, adminMiddleware, getCurrentAdmin);
 
 export default router;

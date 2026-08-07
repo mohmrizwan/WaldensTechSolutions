@@ -32,6 +32,7 @@ export default function Projects() {
   const [formModal, setFormModal] = useState({ isOpen: false, project: null })
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, project: null })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formError, setFormError] = useState('')
 
   const loadProjects = useCallback(async () => {
     setIsLoading(true)
@@ -61,16 +62,26 @@ export default function Projects() {
 
   const handleFormSubmit = async (formData) => {
     setIsSubmitting(true)
+    setFormError('')
     try {
+      const payload = new FormData()
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === 'imageFile') {
+          if (value?.[0]) payload.append('imageFile', value[0])
+        } else if (value !== undefined && value !== null) {
+          payload.append(key, value)
+        }
+      })
+
       if (formModal.project) {
-        await updateProject(formModal.project._id || formModal.project.id, formData)
+        await updateProject(formModal.project._id || formModal.project.id, payload)
       } else {
-        await createProject(formData)
+        await createProject(payload)
       }
       setFormModal({ isOpen: false, project: null })
       loadProjects()
     } catch (err) {
-      console.error(err)
+      setFormError(err.response?.data?.message || 'Unable to save project.')
     } finally {
       setIsSubmitting(false)
     }
@@ -179,10 +190,14 @@ export default function Projects() {
 
       <ProjectFormModal
         isOpen={formModal.isOpen}
-        onClose={() => setFormModal({ isOpen: false, project: null })}
+        onClose={() => {
+          setFormError('')
+          setFormModal({ isOpen: false, project: null })
+        }}
         onSubmit={handleFormSubmit}
         project={formModal.project}
         isSubmitting={isSubmitting}
+        serverError={formError}
       />
 
       <ConfirmModal

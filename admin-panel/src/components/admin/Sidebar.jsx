@@ -13,6 +13,8 @@ import {
 import { NAV_ITEMS, ROUTES, API_BASE_URL } from "../../utils/constants";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useState, useEffect } from "react";
+import { getCurrentAdmin } from "../../api/adminApi";
 
 const ICON_MAP = {
   LayoutDashboard,
@@ -24,9 +26,22 @@ const ICON_MAP = {
   Sparkles,
 };
 export default function Sidebar({ isOpen, onClose }) {
-  const user = null;
-  const navigate = useNavigate();
+  const [admin, setAdmin] = useState(null);
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchAdmin = async () => {
+      try {
+        const data = await getCurrentAdmin();
+        console.log(data)
+        setAdmin(data.admin);
+      } catch (error) {
+        console.error("Failed to fetch admin:", error);
+      }
+    };
+
+    fetchAdmin();
+  }, []);
   const logout = async () => {
     try {
       const response = await axios.post(
@@ -132,14 +147,14 @@ export default function Sidebar({ isOpen, onClose }) {
       <div className="border-t border-white/5 p-3">
         <div className="flex items-center gap-3 rounded-lg px-2 py-2">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-300 text-sm font-medium text-gray-100">
-            {(user?.name || "A").charAt(0).toUpperCase()}
+            {(admin?.name || "A").charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-gray-100">
-              {user?.name || "Admin"}
+              {admin?.name || "Admin"}
             </p>
             <p className="truncate text-xs text-gray-500">
-              {user?.email || "admin@example.com"}
+              {admin?.email || "admin@example.com"}
             </p>
           </div>
           <button
