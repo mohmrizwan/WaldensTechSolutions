@@ -12,7 +12,7 @@ export default function Header({
   onSearchChange = () => {},
 }) {
   const [openMenu, setOpenMenu] = useState(null); // 'notifications' | 'profile' | null
-  const [admin, serAdmin] = useState(null);
+  const [admin, setAdmin] = useState(null);
   const toggleMenu = (menu) => {
     setOpenMenu((prev) => (prev === menu ? null : menu));
   };
