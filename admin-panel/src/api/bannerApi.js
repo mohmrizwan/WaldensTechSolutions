@@ -1,10 +1,4 @@
-import axios from "axios";
-import { API_BASE_URL } from "../utils/constants";
-
-const bannerApi = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: true,
-});
+import bannerApi from "./api";
 
 export const fetchBanner = async () => {
   const response = await bannerApi.get("/admin/banner/get");

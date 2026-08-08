@@ -10,9 +10,7 @@ import {
   Sparkles,
   LogOut,
 } from "lucide-react";
-import { NAV_ITEMS, ROUTES, API_BASE_URL } from "../../utils/constants";
-import axios from "axios";
-import Swal from "sweetalert2";
+import { NAV_ITEMS, ROUTES } from "../../utils/constants";
 import { useState, useEffect } from "react";
 import { getCurrentAdmin } from "../../api/adminApi";
 import logo from "../../../../frontend/src/assets/images/navbar-logo.png";
@@ -43,51 +41,9 @@ export default function Sidebar({ isOpen, onClose }) {
 
     fetchAdmin();
   }, []);
-  const logout = async () => {
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}/admin/logout`,
-        {},
-        {
-          withCredentials: true,
-        },
-      );
-
-      if (response.status === 200) {
-        await Swal.fire({
-          title: "Logout",
-          text: response.data?.message || "Logout successful",
-          icon: "success",
-        });
-
-        navigate(ROUTES.LOGIN, { replace: true });
-      }
-    } catch (error) {
-      console.error("Logout Error:", error);
-
-      const status = error.response?.status;
-      const message = error.response?.data?.message || "Something went wrong";
-
-      if (status === 500) {
-        Swal.fire({
-          title: "Server Error",
-          text: "Something went wrong on the server.",
-          icon: "error",
-        });
-      } else if (!error.response) {
-        Swal.fire({
-          title: "Connection Error",
-          text: "Unable to connect to the server.",
-          icon: "error",
-        });
-      } else {
-        Swal.fire({
-          title: "Logout Failed",
-          text: message,
-          icon: "error",
-        });
-      }
-    }
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate(ROUTES.LOGIN, { replace: true });
   };
 
   return (

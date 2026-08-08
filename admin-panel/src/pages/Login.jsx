@@ -19,17 +19,11 @@ export default function Login() {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/admin/login`,
-        data,
-        {
-          withCredentials: true,
-        },
-      );
+      const response = await axios.post(`${API_BASE_URL}/admin/login`, data);
 
       // Success
       if (response.status === 200) {
-        localStorage.setItem('adminAuth', 'true')
+        localStorage.setItem("token", response.data.token);
         Swal.fire({
           title: "Login Successful",
           text: response.data?.message || "Welcome back!",

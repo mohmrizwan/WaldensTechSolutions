@@ -87,19 +87,11 @@ export const adminLogin = async (req, res) => {
     // Generate JWT
     const token = generateToken(adminExist);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-    console.log("TOKEN CREATED:", token);
-    console.log("COOKIE SET");
-
     // Success Response
     return res.status(200).json({
       success: true,
       message: "Login Successful",
+      token,
       admin: {
         _id: adminExist._id,
         name: adminExist.name,
@@ -119,12 +111,6 @@ export const adminLogin = async (req, res) => {
 
 export const logoutAdmin = async (req, res) => {
   try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
-
     return res.status(200).json({
       success: true,
       message: "Logged out successfully",

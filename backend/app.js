@@ -3,7 +3,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
 dotenv.config();
-import cookieParser from "cookie-parser";
 import cors from "cors";
 import dbconnect from "./Config/dbconnect.js";
 import adminAuth from "./Router/adminRoutes.js";
@@ -18,7 +17,6 @@ const app = express();
 const port = process.env.PORT;
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 
-app.use(cookieParser());
 app.use("/uploads", express.static(path.join(currentDirectory, "uploads")));
 
 const allowedOrigins = [
@@ -29,7 +27,6 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: allowedOrigins,
-    credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),

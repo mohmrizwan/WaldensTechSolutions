@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem('adminAuth') === 'true'
+    const isAuthenticated = Boolean(localStorage.getItem("token"));
     setAuthenticated(isAuthenticated)
     setLoading(false)
   }, [])

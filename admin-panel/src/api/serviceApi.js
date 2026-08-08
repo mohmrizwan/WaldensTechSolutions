@@ -1,10 +1,4 @@
-import axios from "axios";
-import { API_BASE_URL } from "../utils/constants";
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: true,
-});
+import api from "./api";
 
 export async function fetchServices() {
   const response = await api.get("/admin/service/getService");

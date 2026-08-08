@@ -14,6 +14,7 @@ export default function ProfileMenu({ isOpen, onToggle, onClose }) {
   useClickOutside(menuRef, onClose, isOpen)
 
   const handleLogout = () => {
+    localStorage.removeItem("token")
     onClose()
     navigate(ROUTES.LOGIN)
   }

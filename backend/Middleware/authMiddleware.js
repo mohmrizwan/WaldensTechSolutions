@@ -1,20 +1,19 @@
+import jwt from "jsonwebtoken";
+import Admin from "../Models/admin.js";
+
 const authMiddleware = async (req, res, next) => {
   try {
-    console.log("COOKIES:", req.cookies);
-    console.log("TOKEN:", req.cookies?.token ? "TOKEN FOUND" : "NO TOKEN");
+    const authHeader = req.headers.authorization;
 
-    const token = req.cookies?.token;
-
-    if (!token) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({
         success: false,
         message: "User not authenticated",
       });
     }
 
+    const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    console.log("DECODED TOKEN:", decoded);
 
     const admin = await Admin.findById(decoded.id).select("-password");
 
@@ -29,7 +28,6 @@ const authMiddleware = async (req, res, next) => {
     req.admin = admin;
 
     next();
-
   } catch (error) {
     console.error("AUTH ERROR:", error);
 

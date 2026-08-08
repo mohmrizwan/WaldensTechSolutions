@@ -1,10 +1,7 @@
-import axios from "axios";
-import { API_BASE_URL } from "../utils/constants";
+import api from "./api";
 
 export const getCurrentAdmin = async () => {
-  const response = await axios.get(`${API_BASE_URL}/admin/me`, {
-    withCredentials: true,
-  });
+  const response = await api.get("/admin/me");
 
   return response.data;
 };
