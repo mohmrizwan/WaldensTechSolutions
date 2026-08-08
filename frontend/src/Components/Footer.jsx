@@ -10,7 +10,6 @@ const Footer = () => {
 
       {/* Main Footer */}
       <div className="walden-inner flex flex-col lg:flex-row justify-between gap-10 my-8">
-
         {/* Logo & About */}
         <div className="w-full lg:w-[40%]">
           <div className="footer-logo flex justify-center lg:justify-start">
@@ -83,15 +82,12 @@ const Footer = () => {
           </h2>
 
           <div className="mt-5 flex flex-col items-center lg:items-start gap-4">
-
             <a
               href="mailto:hello@waldenstechsolution.com"
               className="flex items-center gap-3 text-white hover:text-[#F4C95D] transition-all"
             >
               <i className="fa-regular fa-envelope"></i>
-              <span className="font-space">
-                hello@waldenstechsolution.com
-              </span>
+              <span className="font-space">mohmrizwan10@gmail.com</span>
             </a>
 
             <a
@@ -99,9 +95,7 @@ const Footer = () => {
               className="flex items-center gap-3 text-white hover:text-[#F4C95D] transition-all"
             >
               <i className="fa-solid fa-phone"></i>
-              <span className="font-space">
-                +91 9826480948
-              </span>
+              <span className="font-space">+91 9826480948</span>
             </a>
 
             <p className="text-[#F4C95D] text-lg sm:text-xl font-space">
@@ -110,7 +104,7 @@ const Footer = () => {
           </div>
         </div>
 
-           {/* Social Icons */}
+        {/* Social Icons */}
         <div className="w-full lg:w-auto flex justify-center lg:justify-end items-center">
           <svg width="0" height="0" style={{ position: "absolute" }}>
             <defs>
