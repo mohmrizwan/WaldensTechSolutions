@@ -21,7 +21,10 @@ const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 app.use(cookieParser());
 app.use("/uploads", express.static(path.join(currentDirectory, "uploads")));
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = [
+  "https://waldenstechsolutions.vercel.app/",
+  "https://waldens-tech-solutions.vercel.app",
+];
 
 app.use(
   cors({
