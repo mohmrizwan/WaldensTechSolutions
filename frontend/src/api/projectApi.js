@@ -9,7 +9,7 @@ export async function fetchProjects({ page = 1, limit = 12, search = "" } = {}) 
   }
 
   const response = await fetch(url.toString(), {
-    credentials: "include",
+
   });
 
   if (!response.ok) {
