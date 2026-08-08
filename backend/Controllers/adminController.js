@@ -53,10 +53,7 @@ export const RegisterAdmin = async (req, res) => {
 };
 
 export const adminLogin = async (req, res) => {
-
-  
   try {
-
     const { email, password } = req.body;
 
     // Validate Input
@@ -90,14 +87,13 @@ export const adminLogin = async (req, res) => {
     // Generate JWT
     const token = generateToken(adminExist);
 
-    // Set Cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // true in production (HTTPS)
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    console.log("token recieved")
+    console.log("token recieved");
 
     // Success Response
     return res.status(200).json({
