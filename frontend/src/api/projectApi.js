@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ;
 
 export async function fetchProjects({ page = 1, limit = 12, search = "" } = {}) {
   const url = new URL(`${API_BASE_URL}/admin/project`);
