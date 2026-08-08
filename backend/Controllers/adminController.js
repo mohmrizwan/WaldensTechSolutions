@@ -93,7 +93,8 @@ export const adminLogin = async (req, res) => {
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    console.log("token recieved");
+    console.log("TOKEN CREATED:", token);
+    console.log("COOKIE SET");
 
     // Success Response
     return res.status(200).json({
