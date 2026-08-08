@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use("/uploads", express.static(path.join(currentDirectory, "uploads")));
 
 const allowedOrigins = [
-  "https://waldenstechsolutions.vercel.app/",
+  "https://waldenstechsolutions.vercel.app",
   "https://waldens-tech-solutions.vercel.app",
 ];
 
