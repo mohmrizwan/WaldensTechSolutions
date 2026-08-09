@@ -1,29 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchProjects } from "../api/projectApi";
 
-const placeholderCards = [
-  {
-    title: "Loading project...",
-    category: "Web App",
-    description: "Fetching latest projects from the backend.",
-    projectUrl: "/project",
-    imageUrl: "",
-  },
-  {
-    title: "Loading project...",
-    category: "Web App",
-    description: "Fetching latest projects from the backend.",
-    projectUrl: "/project",
-    imageUrl: "",
-  },
-  {
-    title: "Loading project...",
-    category: "Web App",
-    description: "Fetching latest projects from the backend.",
-    projectUrl: "/project",
-    imageUrl: "",
-  },
-];
+
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);

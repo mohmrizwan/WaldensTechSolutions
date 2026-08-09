@@ -1,4 +1,21 @@
 import Project from "../Models/ProjectModel.js";
+import cloudinary from "../Config/cloudinary.js";
+
+const uploadProjectImage = (buffer) =>
+  new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder: "walden/projects", resource_type: "image" },
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+
+        return resolve(result.secure_url);
+      },
+    );
+
+    uploadStream.end(buffer);
+  });
 
 const normalizeProjectUrl = (value) => {
   const projectUrl = typeof value === "string" ? value.trim() : "";
@@ -26,7 +43,7 @@ export const createProject = async (req, res) => {
   try {
     const { name, client, category, description, status, startDate, endDate, imageUrl, projectUrl } = req.body;
     const normalizedProjectUrl = normalizeProjectUrl(projectUrl);
-    const uploadedImageUrl = req.file ? `${req.protocol}://${req.get("host")}/uploads/projects/${req.file.filename}` : imageUrl;
+    const uploadedImageUrl = req.file ? await uploadProjectImage(req.file.buffer) : imageUrl;
 
     if (!name || !client || !description) {
       return res.status(400).json({ success: false, message: "Name, client, and description are required." });
@@ -110,7 +127,7 @@ export const updateProject = async (req, res) => {
     const updates = { ...req.body };
 
     if (req.file) {
-      updates.imageUrl = `${req.protocol}://${req.get("host")}/uploads/projects/${req.file.filename}`;
+      updates.imageUrl = await uploadProjectImage(req.file.buffer);
     }
 
     if ("projectUrl" in updates) {

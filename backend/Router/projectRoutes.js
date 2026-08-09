@@ -12,10 +12,10 @@ import {
 
 const router = express.Router();
 
-router.post("/create", authMiddleware, adminMiddleware, projectImageUpload.single("imageFile"), createProject);
+router.post("/create", authMiddleware, adminMiddleware, projectImageUpload.single("image"), createProject);
 router.get("/", getProjects);
 router.get("/:id", getProjectById);
-router.put("/update/:id", authMiddleware, adminMiddleware, projectImageUpload.single("imageFile"), updateProject);
+router.put("/update/:id", authMiddleware, adminMiddleware, projectImageUpload.single("image"), updateProject);
 router.delete("/delete/:id", authMiddleware, adminMiddleware, deleteProject);
 
 export default router;

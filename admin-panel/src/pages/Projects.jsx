@@ -67,7 +67,7 @@ export default function Projects() {
       const payload = new FormData()
       Object.entries(formData).forEach(([key, value]) => {
         if (key === 'imageFile') {
-          if (value?.[0]) payload.append('imageFile', value[0])
+          if (value?.[0]) payload.append('image', value[0])
         } else if (value !== undefined && value !== null) {
           payload.append(key, value)
         }
