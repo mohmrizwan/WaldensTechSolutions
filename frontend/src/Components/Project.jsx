@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchProjects } from "../api/projectApi";
 
+const placeholderCards = [
 
+];
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
