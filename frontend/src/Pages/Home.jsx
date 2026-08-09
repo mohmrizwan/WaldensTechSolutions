@@ -67,12 +67,14 @@ const Home = () => {
 
           {/* Title */}
           <div className="banner-title py-5">
-            <h1 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-extrabold font-space leading-tight max-w-5xl mx-auto">
+            <h1 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-extrabold w- font-space leading-tight">
               {title.replace(highlight, "")}
 
               <span className="text-[#F4C95D] [text-shadow:0_0_8px_rgba(244,201,93,0.35),0_0_20px_rgba(244,201,93,0.25)]">
                 {highlight}
               </span>
+
+              <br className="hidden sm:block" />
             </h1>
           </div>
 
