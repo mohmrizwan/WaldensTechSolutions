@@ -140,6 +140,7 @@ const Footer = () => {
               <a
                 href="https://www.linkedin.com/in/mohmmad-rizwan/"
                 title="LinkedIn"
+                target="_blank"
                 style={{ clipPath: "url(#squircleClip)" }}
                 className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-[#f7ce67] to-[#F4C95D] rounded-xl flex items-center justify-center shadow-lg border border-blue-500/50 cursor-pointer transition-all duration-300 hover:scale-110 hover:-translate-y-2"
               >
