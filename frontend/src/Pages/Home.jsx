@@ -71,7 +71,7 @@ const Home = () => {
               {title.replace(highlight, "")}
 
               <span className="text-[#F4C95D] [text-shadow:0_0_8px_rgba(244,201,93,0.35),0_0_20px_rgba(244,201,93,0.25)]">
-              &nbsp; {highlight}
+              &nbsp;  {highlight}
               </span>
             </h1>
           </div>

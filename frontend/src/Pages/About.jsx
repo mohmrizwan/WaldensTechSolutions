@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import about from '../assets/images/about.png'
 
 export const About = () => {
   return (
@@ -29,7 +30,7 @@ export const About = () => {
             <div className="relative">
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-[#24304A] bg-[#0B1220]">
                 <img
-                  src=""
+                  src={about}
                   alt="About us"
                   className="h-full w-full object-cover"
                 />
@@ -38,7 +39,7 @@ export const About = () => {
               {/* Floating card */}
               <div className="absolute -bottom-8 -right-6 rounded-2xl border border-[#F4C95D]/30 bg-gradient-to-br from-[#101827] to-[#0B1220] px-7 py-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
                 <h4 className="text-3xl font-bold text-[#F4C95D] font-space">
-                  50+
+                  2+
                 </h4>
                 <p className="mt-1 text-sm text-[#B8C0D0]">Projects Shipped</p>
               </div>
