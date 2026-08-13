@@ -134,10 +134,10 @@ export const About = () => {
 
           {/* Bottom CTA */}
           <div className="mt-14 text-center">
-            <button className="group inline-flex items-center gap-2 rounded-full bg-[#F4C95D] px-8 py-4 text-base font-space font-semibold text-[#0B1220] transition-all duration-300 hover:bg-white hover:gap-4 hover:shadow-[0_15px_40px_rgba(244,201,93,0.3)]">
+            <Link to="/contact" className="group inline-flex items-center gap-2 rounded-full bg-[#F4C95D] px-8 py-4 text-base font-space font-semibold text-[#0B1220] transition-all duration-300 hover:bg-white hover:gap-4 hover:shadow-[0_15px_40px_rgba(244,201,93,0.3)]">
               <span>Let's Talk</span>
               <i className="fa-solid fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
-            </button>
+            </Link>
           </div>
         </div>
       </div>
