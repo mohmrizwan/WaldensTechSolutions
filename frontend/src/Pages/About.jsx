@@ -2,6 +2,8 @@ import React from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import about from '../assets/images/about.png'
+import { Link } from "react-router-dom";
+
 
 export const About = () => {
   return (
